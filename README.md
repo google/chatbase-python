@@ -78,7 +78,7 @@ msg = agnSet.new_message(intent="a", message="b")
 # Don't forget to set the message and recipient ids
 msg.set_recipient_id("123")
 msg.set_message_id("xyz")
-resp = set.send()
+resp = agnSet.send()
 
 # User Message Set
 usrSet = FacebookUserMessageSet(api_key="a", version="b")
@@ -87,7 +87,7 @@ msg = usrSet.new_message(intent="c", message="d")
 msg.set_recipient_id("123")
 msg.set_sender_id("456")
 msg.set_message_id("xyz")
-resp = set.send()
+resp = usrSet.send()
 ```
 
 #### Tests
