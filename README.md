@@ -1,4 +1,5 @@
 # Python Client for Chatbase
+##### A Python library for the [Chatbase API](https://chatbase.com/documentation/ref)
 
 > This is not an official Google product
 
