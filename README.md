@@ -3,7 +3,7 @@
 ## Quick Start
 
 ```SH
-$ pip install --upgrade chatbase
+$ pip install git+git://github.com/google/chatbase-python.git
 ```
 
 ## Account Setup
