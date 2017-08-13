@@ -7,7 +7,7 @@ $ pip install git+git://github.com/google/chatbase-python.git
 ```
 
 ## Account Setup
-Please see the [Getting Started Section](https://chatbase.com/documentation/getting-started) for information
+Please see the [Getting Started Section](https://chatbase.com/documentation/quickstart) for information
 on configuring one's account and obtaining and API key.
 
 ## Using the module
