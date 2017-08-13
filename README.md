@@ -1,5 +1,7 @@
 # Python Client for Chatbase
 
+> This is not an official Google product
+
 ## Quick Start
 
 ```SH
