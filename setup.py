@@ -20,6 +20,7 @@ setup(name='chatbase',
       description='Python module for interacting with Chatbase APIs',
       url='https://chatbase.com/documentation',
       author='Google Inc.',
+      author_email='chatbase-feedback@google.com',
       license='Apache-2.0',
       packages=['chatbase'],
       zip_safe=False)
