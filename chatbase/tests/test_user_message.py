@@ -120,7 +120,4 @@ class TestUserMessage(unittest.TestCase):
         i.set_message_id("456")
         i.set_sender_id("456")
         resp = s.send()
-        print("")
-        print(resp.text)
-        print("")
         self.assertEqual(resp.status_code, 200)

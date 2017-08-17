@@ -65,6 +65,16 @@ class FacebookUserMessage(Message):
             'message': self.fb_message,
             'chatbase_fields': self.chatbase_fields
         }, default=lambda i: i.__dict__)
+
+    def to_set_format(self):
+        self.set_chatbase_fields()
+        return {
+            'sender': self.sender,
+            'recipient': self.recipient,
+            'timestamp': self.timestamp,
+            'message': self.fb_message,
+            'chatbase_fields': self.chatbase_fields
+        }
     
     def send(self):
         """Send the message to the Chatbase API."""
@@ -96,8 +106,8 @@ class FacebookUserMessageSet(object):
 
     def to_json(self):
         """Return a JSON version for use with the Chatbase API"""
-        [(lambda m: m.set_chatbase_fields())(m) for m in self.messages]
-        return json.dumps(self.messages, default=lambda i: i.__dict__)
+        msgs = [msg.to_set_format() for msg in self.messages]
+        return json.dumps({"messages": msgs}, default=lambda i: i.__dict__)
 
     def send(self):
         """Send the message set to the Chatbase API"""
