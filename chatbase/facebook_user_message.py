@@ -67,6 +67,7 @@ class FacebookUserMessage(Message):
         }, default=lambda i: i.__dict__)
 
     def to_set_format(self):
+        """Return a dictionary version of the message for a set"""
         self.set_chatbase_fields()
         return {
             'sender': self.sender,
