@@ -23,4 +23,5 @@ setup(name='chatbase',
       author_email='chatbase-feedback@google.com',
       license='Apache-2.0',
       packages=['chatbase'],
+      install_requires=['requests'],
       zip_safe=False)
