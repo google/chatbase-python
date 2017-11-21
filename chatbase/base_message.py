@@ -48,7 +48,8 @@ class Message(object):
                  message="",
                  intent="",
                  version="",
-                 user_id=""):
+                 user_id="",
+                 time_stamp=None):
         self.api_key = api_key
         self.platform = platform
         self.message = message
@@ -57,7 +58,7 @@ class Message(object):
         self.user_id = user_id
         self.not_handled = False
         self.feedback = False
-        self.time_stamp = Message.get_current_timestamp()
+        self.time_stamp = time_stamp or Message.get_current_timestamp()
         self.type = MessageTypes.USER
 
     @staticmethod
