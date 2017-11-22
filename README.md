@@ -22,7 +22,7 @@ Generic:
 ```PYTHON
 from chatbase import Message
 
-msg = Message(api_key="x", 
+msg = Message(api_key="x",
               platform="kik",
               version="0.1",
               user_id="unique-str",
@@ -66,6 +66,14 @@ msg = set.new_message(intent="impress", content="goes to 11")
 # one can still edit the message normally and these changes will be reflected
 # in the containing set
 msg.user_id = "shark-sandwich"
+# Message type objects can be appended:
+msg2 = Message(api_key="x",
+              platform="my_platform",
+              version="0.1",
+              user_id="unique-str",
+              message="this is a test",
+              intent="test")
+set.append_message(msg2)
 # Sending the set will send all contained messages to the batch endpoint
 resp = set.send()
 ```
@@ -98,5 +106,5 @@ Please place tests in `tests` directory. To run tests, from the repository
 root run the following command:
 
 ```
-$ python -m unittest discover ./tests/ 
+$ python -m unittest discover ./chatbase/tests/
 ```

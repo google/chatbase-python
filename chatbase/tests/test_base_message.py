@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import json
+import time
 import os
 import unittest
 from chatbase import Message, MessageSet, MessageTypes, InvalidMessageTypeError
@@ -67,9 +68,11 @@ class TestMessage(unittest.TestCase):
         intent = '3'
         version = '4'
         user_id = '5'
+        time_stamp = int(round(time.time() * 1e3))
         i = Message(api_key=api_key, platform=platform, message=message,
-                    intent=intent, version=version, user_id=user_id)
-        i.set_as_not_handled()
+                    intent=intent, version=version, user_id=user_id,
+                    type=MessageTypes.USER, not_handled=True,
+                    time_stamp=time_stamp)
         i.set_as_feedback()
         self.assertEqual(json.loads(i.to_json()), {
             'api_key': api_key,
@@ -78,10 +81,97 @@ class TestMessage(unittest.TestCase):
             'intent': intent,
             'version': version,
             'user_id': user_id,
-            'time_stamp': i.time_stamp,
+            'time_stamp': time_stamp,
             'type': MessageTypes.USER,  # since we did not set as type agent
             'not_handled': True,
             'feedback': True
+        })
+
+    def test_message_set_append_message(self):
+        api_key = '1234'
+        platform = '1'
+        message = '2'
+        intent = '3'
+        version = '4'
+        user_id = '5'
+        time_stamp = int(round(time.time() * 1e3))
+        msg1 = Message(api_key=api_key, platform=platform, message=message,
+                    intent=intent, version=version, user_id=user_id,
+                    type=MessageTypes.USER, not_handled=True,
+                    time_stamp=time_stamp)
+        msg1.set_as_feedback()
+        msg2 = Message(api_key=api_key, platform=platform, message=message,
+                    version=version, user_id=user_id,
+                    type=MessageTypes.AGENT)
+        message_set = MessageSet(api_key=api_key, platform=platform,
+                                 version=version, user_id=user_id)
+        message_set.append_message(msg1)
+        message_set.append_message(msg2)
+        msg1 = message_set.messages[0]
+        self.assertEqual(json.loads(msg1.to_json()), {
+            'api_key': api_key,
+            'platform': platform,
+            'message': message,
+            'intent': intent,
+            'version': version,
+            'user_id': user_id,
+            'time_stamp': time_stamp,
+            'type': MessageTypes.USER,  # since we did not set as type agent
+            'not_handled': True,
+            'feedback': True
+        })
+        msg2 = message_set.messages[1]
+        self.assertEqual(json.loads(msg2.to_json()), {
+            'api_key': api_key,
+            'platform': platform,
+            'message': message,
+            'intent': msg2.intent,
+            'version': version,
+            'user_id': user_id,
+            'time_stamp': msg2.time_stamp,
+            'type': MessageTypes.AGENT,  # since we did set as type agent
+            'not_handled': False,
+            'feedback': False
+        })
+
+    def test_message_set_new_message(self):
+        api_key = '1234'
+        platform = '1'
+        message = '2'
+        intent = '3'
+        version = '4'
+        user_id = '5'
+        time_stamp = int(round(time.time() * 1e3))
+        message_set = MessageSet(api_key=api_key, platform=platform,
+                                 version=version, user_id=user_id)
+        msg1 = message_set.new_message(intent=intent, message=message,
+                                       type=MessageTypes.USER,
+                                       not_handled=True, time_stamp=time_stamp)
+        msg1.set_as_feedback()
+        msg2 = message_set.new_message(message=message, type=MessageTypes.AGENT)
+        self.assertEqual(json.loads(msg1.to_json()), {
+            'api_key': api_key,
+            'platform': platform,
+            'message': message,
+            'intent': intent,
+            'version': version,
+            'user_id': user_id,
+            'time_stamp': time_stamp,
+            'type': MessageTypes.USER,  # since we did not set as type agent
+            'not_handled': True,
+            'feedback': True
+        })
+        self.assertEqual(json.loads(msg2.to_json()), {
+            'api_key': api_key,
+            'platform': platform,
+            'message': message,
+            'intent': msg2.intent,
+            'version': version,
+            'user_id': user_id,
+            'time_stamp': msg2.time_stamp,
+            'type': MessageTypes.AGENT,  # since we did not set as type agent
+            'not_handled': False,
+            'feedback': False
         })
 
     def test_live_send(self):
@@ -97,7 +187,7 @@ class TestMessage(unittest.TestCase):
                     user_id="12345")
         resp = i.send()
         self.assertEqual(resp.status_code, 200)
-    
+
     def test_live_set_send(self):
         test_api_key = os.environ.get('CB_TEST_API_KEY')
         if test_api_key is None:
