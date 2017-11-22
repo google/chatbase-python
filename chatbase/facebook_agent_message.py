@@ -16,8 +16,8 @@
 
 import json
 import requests
-from base_message import Message
-from facebook_chatbase_fields import *
+from .base_message import Message
+from .facebook_chatbase_fields import *
 
 
 class FacebookAgentMessageRequestBody(object):
