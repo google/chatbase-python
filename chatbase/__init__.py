@@ -18,3 +18,10 @@ from chatbase.base_message import *
 from chatbase.facebook_agent_message import *
 from chatbase.facebook_chatbase_fields import *
 from chatbase.facebook_user_message import *
+from chatbase.events import (
+    CustomEventProperty,
+    CustomEvent,
+    CustomBatchEvents,
+    InvalidEventException,
+    ClickEvent
+)
