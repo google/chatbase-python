@@ -36,9 +36,8 @@ class MessageTypes(object):
     USER = "user"
     AGENT = "agent"
 
-
 class Message(object):
-    """Base Message.
+    """Base Message. modified based on older version
     Define attributes present on all variants of the Message Class.
     """
 
@@ -48,7 +47,8 @@ class Message(object):
                  message="",
                  intent="",
                  version="",
-                 user_id=""):
+                 user_id="",
+                 time_stamp=None):
         self.api_key = api_key
         self.platform = platform
         self.message = message
@@ -57,7 +57,8 @@ class Message(object):
         self.user_id = user_id
         self.not_handled = False
         self.feedback = False
-        self.time_stamp = Message.get_current_timestamp()
+        if time_stamp == None:
+            self.time_stamp = Message.get_current_timestamp()
         self.type = MessageTypes.USER
 
     @staticmethod
@@ -117,9 +118,8 @@ class Message(object):
                              data=self.to_json(),
                              headers=Message.get_content_type())
 
-
 class MessageSet(object):
-    """Message Set.
+    """Message Set. modified based on older version
     Add messages to a set and send to the Batch API.
     """
 
@@ -134,14 +134,15 @@ class MessageSet(object):
         self.user_id = user_id
         self.messages = []
 
-    def new_message(self, intent="", message=""):
+    def new_message(self, intent="", message="", time_stamp=None):
         """Add a message to the internal messages list and return it"""
         self.messages.append(Message(api_key=self.api_key,
                                      platform=self.platform,
                                      version=self.version,
                                      user_id=self.user_id,
                                      intent=intent,
-                                     message=message))
+                                     message=message,
+                                     time_stamp=time_stamp))
         return self.messages[-1]
 
     def to_json(self):
