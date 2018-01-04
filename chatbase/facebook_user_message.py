@@ -15,8 +15,8 @@
 """Define the attributes on facebook user messages."""
 
 import json, requests
-from base_message import Message
-from facebook_chatbase_fields import *
+from .base_message import Message
+from .facebook_chatbase_fields import *
 
 
 class FacebookUserMessage(Message):
