@@ -46,7 +46,7 @@ class FacebookUserMessage(Message):
     def set_message_id(self, msg_id):
         """Set the message id."""
         self.fb_message.mid = msg_id
-    
+
     def set_chatbase_fields(self):
         """Extract chatbase fields from instance and format for transmission."""
         self.chatbase_fields.intent = self.intent
@@ -76,7 +76,7 @@ class FacebookUserMessage(Message):
             'message': self.fb_message,
             'chatbase_fields': self.chatbase_fields
         }
-    
+
     def send(self):
         """Send the message to the Chatbase API."""
         url = ("https://chatbase.com/api/facebook/send_message?api_key=%s" %
