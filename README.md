@@ -60,7 +60,7 @@ Generic:
 from chatbase import MessageSet
 
 # When we init the message set we can set several properties which will be
-# propagated to all message created from the set!
+# propagated to all messages created from the set!
 set = MessageSet(api_key="x", platform="x", version="1", user_id="123")
 msg = set.new_message(intent="impress", content="goes to 11")
 # one can still edit the message normally and these changes will be reflected
