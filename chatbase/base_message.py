@@ -49,6 +49,7 @@ class Message(object):
                  intent="",
                  version="",
                  user_id="",
+                 session_id="",
                  type=None,
                  not_handled=False,
                  time_stamp=None):
@@ -58,6 +59,7 @@ class Message(object):
         self.intent = intent
         self.version = version
         self.user_id = user_id
+        self.session_id = session_id
         self.not_handled = not_handled
         self.feedback = False
         self.time_stamp = time_stamp or Message.get_current_timestamp()
