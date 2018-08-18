@@ -120,7 +120,8 @@ class Message(object):
         url = "https://chatbase.com/api/message"
         return requests.post(url,
                              data=self.to_json(),
-                             headers=Message.get_content_type())
+                             headers=Message.get_content_type(),
+                             timeout=1)
 
 
 class MessageSet(object):
