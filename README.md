@@ -31,6 +31,20 @@ msg = Message(api_key="x",
 resp = msg.send()
 ```
 
+Asynchronous:
+
+```PYTHON
+from chatbase import Message
+
+msg = Message(api_key="x",
+              platform="kik",
+              version="0.1",
+              user_id="unique-str",
+              message="this is a test",
+              intent="test")
+resp = msg.sendAsync()
+```
+
 Facebook:
 
 ```PYTHON

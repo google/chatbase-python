@@ -16,12 +16,12 @@
 from setuptools import setup
 
 setup(name='chatbase',
-      version='0.2.1',
+      version='0.2.2',
       description='Python module for interacting with Chatbase APIs',
       url='https://chatbase.com/documentation',
       author='Google Inc.',
-      author_email='chatbase-feedback@google.com',
+      author_email='dightmerc@gmail.com',
       license='Apache-2.0',
       packages=['chatbase'],
-      install_requires=['requests'],
+      install_requires=['requests', 'aiohttp', 'asyncio'],
       zip_safe=False)

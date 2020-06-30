@@ -16,6 +16,8 @@
 import json
 import requests
 import time
+import aiohttp
+import asyncio
 
 
 class InvalidMessageTypeError(Exception):
@@ -120,6 +122,20 @@ class Message(object):
                              data=self.to_json(),
                              headers=Message.get_content_type())
 
+    def sendAsync(self):
+        """Send the message to the Chatbase API asynchronously."""
+        url = "https://chatbase.com/api/message"
+
+        async def _do_async_request():
+            async with aiohttp.ClientSession() as session:
+                async with session.post(url,
+                                        data=self.to_json(),
+                                        headers=Message.get_content_type()
+                                        ) as resp:
+                    return await resp.text()
+
+        asyncio.ensure_future(_do_async_request())
+
 
 class MessageSet(object):
     """Message Set.
@@ -147,7 +163,7 @@ class MessageSet(object):
                     type=None,
                     not_handled=False,
                     time_stamp=None):
-        """Add a message to the internal messages list and return it"""
+        """Add a message to the internal messages list and return it."""
         self.messages.append(Message(api_key=self.api_key,
                                      platform=self.platform,
                                      version=self.version,
@@ -160,7 +176,7 @@ class MessageSet(object):
         return self.messages[-1]
 
     def to_json(self):
-        """Return a JSON version for use with the Chatbase API"""
+        """Return a JSON version for use with the Chatbase API."""
         return json.dumps({'messages': self.messages},
                           default=lambda i: i.__dict__)
 
@@ -170,3 +186,17 @@ class MessageSet(object):
         return requests.post(url,
                              data=self.to_json(),
                              headers=Message.get_content_type())
+
+    def sendAsync(self):
+        """Send the message to the Chatbase API asynchronously."""
+        url = ("https://chatbase.com/api/messages?api_key=%s" % self.api_key)
+
+        async def _do_async_request():
+            async with aiohttp.ClientSession() as session:
+                async with session.post(url,
+                                        data=self.to_json(),
+                                        headers=Message.get_content_type()
+                                        ) as resp:
+                    return await resp.text()
+
+        asyncio.ensure_future(_do_async_request())
