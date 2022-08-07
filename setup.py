@@ -16,7 +16,7 @@
 from setuptools import setup
 
 setup(name='chatbase',
-      version='0.2.1',
+      version='1.1.2',
       description='Python module for interacting with Chatbase APIs',
       url='https://chatbase.com/documentation',
       author='Google Inc.',
